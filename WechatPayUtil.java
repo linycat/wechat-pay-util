@@ -66,6 +66,7 @@ public class WechatPayUtil {
     /**
      * 静态对象引用
      */
+    public static final WXPay WX_PAY = new WXPay(new WechatPayConfig());
     private static PayStatusBusiness payStatusBusiness;
 
     /**
@@ -100,7 +101,7 @@ public class WechatPayUtil {
         requestParamMap.put("trade_type", "NATIVE");
         Map<String, String> responseOrderMap = null;
         try {
-            responseOrderMap = new WXPay(new WechatPayConfig()).unifiedOrder(requestParamMap);
+            responseOrderMap = WX_PAY.unifiedOrder(requestParamMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
