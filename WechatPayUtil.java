@@ -76,9 +76,10 @@ public class WechatPayUtil {
     }
 
     /**
-     * 官方文档：
+     * 参考文档：
      * https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
      * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
+     * https://yclimb.gitbook.io/wxpay/
      *
      * @param outTradeNo        商户订单号（长度限制 6 ~ 32）
      * @param totalFee          标价金额（单位为分）
