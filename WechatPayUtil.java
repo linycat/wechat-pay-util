@@ -41,27 +41,26 @@ public class WechatPayUtil {
      * ===== 如何使用 =====
      * WechatPayUtil.nativePay(outTradeNo, totalFee, body, natSocket, payStatusBusiness)
      * 根据 code_url 生成微信支付二维码（在线二维码生成器 https://cli.im/）
-     * =====
-     * Map<String, String> responseOrderMap = WechatPayUtil.nativePay(
-     *         UUID.randomUUID().toString().replace("-", ""),
-     *         "1",
-     *         "《商品描述》",
-     *         "202.182.125.24:37858",
-     *         new WechatPayUtil.PayStatusBusiness() {
-     *             @Override
-     *             public void paySuccess() {
-     *                 System.out.println("支付成功");
-     *             }
-     *
-     *             @Override
-     *             public void payFail() {
-     *                 System.out.println("支付失败");
-     *             }
-     *         }
-     * );
-     * Optional.ofNullable(responseOrderMap).ifPresent(
-     *         message -> System.out.println(Arrays.toString(responseOrderMap.entrySet().toArray()))
-     * );
+     * * Map<String, String> responseOrderMap = WechatPayUtil.nativePay(
+     * *         UUID.randomUUID().toString().replace("-", ""),
+     * *         "1",
+     * *         "《商品描述》",
+     * *         "202.182.125.24:37858",
+     * *         new WechatPayUtil.PayStatusBusiness() {
+     * *             @Override
+     * *             public void paySuccess() {
+     * *                 System.out.println("支付成功");
+     * *             }
+     * *
+     * *             @Override
+     * *             public void payFail() {
+     * *                 System.out.println("支付失败");
+     * *             }
+     * *         }
+     * * );
+     * * Optional.ofNullable(responseOrderMap).ifPresent(
+     * *         message -> System.out.println(Arrays.toString(responseOrderMap.entrySet().toArray()))
+     * * );
      */
 
     /**
@@ -207,11 +206,16 @@ public class WechatPayUtil {
     }
 
     /**
-     * 前端发送 WebSocket 连接请求
-     * if ('WebSocket' in window) {
-     *     let websocketUrl = "ws://localhost:8088" + "/websocket/" + orderId;
-     *     let websocket = new WebSocket(websocketUrl);
-     * }
+     * 前端发送 WebSocket 连接请求，并接收后端发送的信息
+     * * if ('WebSocket' in window) {
+     * *     let websocketUrl = "ws://localhost:8088" + "/websocket/" + orderId;
+     * *     let websocket = new WebSocket(websocketUrl);
+     * *     websocket.onmessage = function(event) {
+     * *         let message = event.data;
+     * *         console.log("websocket-message", message);
+     * *     }
+     * * } else {
+     * * }
      */
     @Component
     @ServerEndpoint("/websocket/{orderId}")
@@ -236,6 +240,9 @@ public class WechatPayUtil {
             SESSIONS_MAP.remove(orderId);
         }
 
+        /**
+         * 向前端发送消息
+         */
         public static void sendMessage(String orderId, String message) {
             Session session = SESSIONS_MAP.get(orderId);
             if (session != null) {
